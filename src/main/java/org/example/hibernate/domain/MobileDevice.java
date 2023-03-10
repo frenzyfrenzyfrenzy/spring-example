@@ -21,13 +21,13 @@ public class MobileDevice {
 
     @Id
     @Column(name = "MID")
-    private String mid;
+    protected String mid;
 
     @Id
     @Column(name = "USERNAME")
-    private String username;
+    protected String username;
 
     @Column(name = "APP_VERSION")
-    private String appVersion;
+    protected String appVersion;
 
 }

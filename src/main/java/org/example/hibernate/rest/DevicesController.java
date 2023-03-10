@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,10 +25,14 @@ public class DevicesController {
 
     @PostMapping
     @Transactional
-    public MobileDevice insertDevice(@RequestParam("mid") String mid, @RequestParam("username") String username, @RequestParam("appVersion") String appVersion) {
+    public MobileDevice insertDevice(
+            @RequestParam("mid") String mid,
+            @RequestParam("username") String username,
+            @RequestParam("appVersion") String appVersion) {
 
         MobileDevice mobileDevice = MobileDevice.builder()
-                .mid(mid).username(username)
+                .mid(mid)
+                .username(username)
                 .appVersion(appVersion)
                 .build();
 
@@ -36,18 +41,35 @@ public class DevicesController {
         return mobileDevice;
     }
 
+    @PutMapping
+    @Transactional
+    public MobileDevice insertOrUpdateDevice(
+            @RequestParam("mid") String mid,
+            @RequestParam("username") String username,
+            @RequestParam("appVersion") String appVersion) {
+
+        MobileDevice mobileDevice = MobileDevice.builder()
+                .mid(mid)
+                .username(username)
+                .appVersion(appVersion)
+                .build();
+
+        sessionFactory.getCurrentSession().saveOrUpdate(mobileDevice);
+
+        return mobileDevice;
+    }
+
     @GetMapping
     @Transactional
     public MobileDevice getUserDevices(@RequestParam("mid") String mid, @RequestParam("username") String username) {
+
 
         MobileDevicePk pk = MobileDevicePk.builder()
                 .mid(mid)
                 .username(username)
                 .build();
 
-        MobileDevice mobileDevice = sessionFactory.getCurrentSession().find(MobileDevice.class, pk);
-
-        return mobileDevice;
+        return sessionFactory.getCurrentSession().find(MobileDevice.class, pk);
     }
 
 }

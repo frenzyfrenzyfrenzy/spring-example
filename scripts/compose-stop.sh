@@ -1,0 +1,1 @@
+docker compose -f compose.yaml -p example down

@@ -114,37 +114,6 @@
           </annotationProcessorPaths>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>io.fabric8</groupId>
-        <artifactId>docker-maven-plugin</artifactId>
-        <version>0.42.0</version>
-        <configuration>
-          <images>
-            <image>
-              <name>example/hibernate-example</name>
-              <build>
-                <dockerFile>${project.basedir}/Dockerfile</dockerFile>
-              </build>
-              <run>
-                <ports>
-                  <port>8080:8080</port>
-                  <port>8001:8001</port>
-                </ports>
-              </run>
-            </image>
-          </images>
-        </configuration>
-        <executions>
-          <execution>
-            <id>build-docker-image</id>
-            <goals>
-              <goal>build</goal>
-              <goal>start</goal>
-            </goals>
-            <phase>pre-integration-test</phase>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
 
